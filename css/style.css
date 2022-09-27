@@ -31,16 +31,23 @@ text-align: center;
 
 #results {
   position: relative;
-  bottom: 400px;
-  left: 10px;
+  
 }
 
 #show-results-btn{
-  padding: 10px;
-  color: white;
-  background-color: blue;
+  padding: 15px;
+  color: black;
+  background-color: rgb(8, 224, 8);
   width: 6%;
-  font-size: 20px;
+  font-size: 21px;
   cursor: pointer;
   border-radius: 10px;
+  top: 50px;
+  left: 875px;
+}
+div {
+  width: 50%;
+position: relative;
+left: 465px;
+margin-bottom: 100px;
 }

@@ -15,6 +15,12 @@ let imgThree = document.getElementById('img3');
 let resultsBtn = document.getElementById('show-results-btn');
 let resultsContainer = document.getElementById('results-container');
 
+// Canvas element for chart to render to
+let canvasElem = document.getElementById('my-chart').getContext('2d');
+
+//  CHART DEMO - CHART OBJECT
+
+
 //  CONSTRUCTOR FUNCTION
 
 function Duck(name, fileExtension = 'jpg'){
@@ -36,30 +42,85 @@ function renderImgs(){
   let imgOneIndex = randomIndex();
   let imgTwoIndex = randomIndex();
   let imgThreeIndex = randomIndex();
-
+  
   //  imgOne === imgTwo
-
-  while(imgOneIndex === imgTwoIndex){
+  
+  while(imgOneIndex === imgTwoIndex || imgOneIndex === imgThreeIndex || imgTwoIndex === imgThreeIndex){
     imgTwoIndex = randomIndex();
-  }
-  while(imgOneIndex === imgThreeIndex){
     imgOneIndex = randomIndex();
+    imgThreeIndex = randomIndex();
   }
-  while(imgTwoIndex === imgThreeIndex){
-    imgTwoIndex = randomIndex();
-  }
-
+  
+  
   imgOne.src = duckArray[imgOneIndex].img;
   imgTwo.src = duckArray[imgTwoIndex].img;
   imgThree.src = duckArray[imgThreeIndex].img;
-
+  
   duckArray[imgOneIndex].views++;
   duckArray[imgTwoIndex].views++;
-
+  duckArray[imgThreeIndex].views++;
+  
   imgOne.alt = duckArray[imgOneIndex].name;
   imgTwo.alt = duckArray[imgTwoIndex].name;
+  imgThree.alt = duckArray[imgThreeIndex].name;
 }
 
+
+// CANVAS DEMO - CHART FUNCTION
+
+function renderChart(){
+  
+  let duckNames = [];
+  let duckVotes = [];
+  let duckViews = [];
+
+  
+  for(let i = 0; i < duckArray.length; i ++){
+      duckNames.push(duckArray[i].name);
+      duckVotes.push(duckArray[i].clicks);
+      duckViews.push(duckArray[i].views);
+  }
+
+  let myChartObj = {
+    type: 'bar',
+    data: {
+
+
+        labels: duckNames,
+        datasets: [{
+            data: duckVotes,
+            label: '# of Votes',
+            backgroundColor: [
+                'rgba(50, 205, 50, 0.8)',
+            ],
+            borderColor: [
+                'rgba(50, 205, 50, 1)',
+            ],
+            borderWidth: 1
+        },
+        {
+        data: duckViews,
+        label: '# of Views',
+        backgroundColor: [
+            'gray'
+        ],
+        borderColor: [
+          'black'
+        ],
+        borderWidth: 1
+    }]
+    
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+  };
+  new Chart(canvasElem, myChartObj);
+}
 //  EVENT HANDLERS
 
 function handleClick(event){
@@ -85,13 +146,14 @@ function handleClick(event){
   
 function handleShowResults(){
   if(voteCount === 0){
-    console.log('clicked');
-    for(let i = 0; i < duckArray.length; i++){
-      let liElem = document.createElement('li');
-      console.dir(liElem);
-      liElem.textContent = `${duckArray[i].name} was viewed ${duckArray[i].views} times and was clicked ${duckArray[i].clicks} times`;
-      resultsContainer.appendChild(liElem);
-    }
+    renderChart();
+    // console.log('clicked');
+    // for(let i = 0; i < duckArray.length; i++){
+    //   let liElem = document.createElement('li');
+    //   console.dir(liElem);
+    //   liElem.textContent = `${duckArray[i].name} was viewed ${duckArray[i].views} times and was clicked ${duckArray[i].clicks} times`;
+    //   resultsContainer.appendChild(liElem);
+    // }
     resultsBtn.removeEventListener('click', handleShowResults)
   }
 }
