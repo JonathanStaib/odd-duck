@@ -38,23 +38,34 @@ function randomIndex(){
   return Math.floor(Math.random() * duckArray.length);
 }
 
+let indexArray = [];
+
 function renderImgs(){
-  let imgOneIndex = randomIndex();
-  let imgTwoIndex = randomIndex();
-  let imgThreeIndex = randomIndex();
+  // let imgOneIndex = randomIndex();
+  // let imgTwoIndex = randomIndex();
+  // let imgThreeIndex = randomIndex();
   
   //  imgOne === imgTwo
   
-  while(imgOneIndex === imgTwoIndex || imgOneIndex === imgThreeIndex || imgTwoIndex === imgThreeIndex){
-    imgTwoIndex = randomIndex();
-    imgOneIndex = randomIndex();
-    imgThreeIndex = randomIndex();
+  while(indexArray.length < 6) {
+    let randomNum = randomIndex();
+    if(!indexArray.includes(randomNum)){
+      indexArray.push(randomNum);
+    }
   }
-  
-  
+
+  let imgOneIndex = indexArray.shift();
+  let imgTwoIndex = indexArray.shift();
+  let imgThreeIndex = indexArray.shift();
+
   imgOne.src = duckArray[imgOneIndex].img;
   imgTwo.src = duckArray[imgTwoIndex].img;
   imgThree.src = duckArray[imgThreeIndex].img;
+  
+  
+  // imgOne.src = duckArray[imgOneIndex].img;
+  // imgTwo.src = duckArray[imgTwoIndex].img;
+  // imgThree.src = duckArray[imgThreeIndex].img;
   
   duckArray[imgOneIndex].views++;
   duckArray[imgTwoIndex].views++;
