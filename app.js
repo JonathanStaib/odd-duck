@@ -32,6 +32,9 @@ function Duck(name, fileExtension = 'jpg'){
   duckArray.push(this);
 }
 
+Duck.prototype.myMethod = function(){
+  return 'hey';
+}
 //  HELPER FUNCTION/ UTILITIES
 
 function randomIndex(){
@@ -152,6 +155,14 @@ function handleClick(event){
   // After voting rounds have ended... end the clicks!!
   if(voteCount === 0){
     imgContainer.removeEventListener('click', handleClick);
+
+    // Step 1: STRINGIFY THE DATA
+
+    let stringifiedDucks = JSON.stringify(duckArray);
+    console.log('stringified goats >>>', stringifiedDucks);
+    // STEP 2: ADD TO LOCAL STORAGE
+
+    localStorage.setItem('myDucks', stringifiedDucks)
   }
 }
   
@@ -168,29 +179,57 @@ function handleShowResults(){
     resultsBtn.removeEventListener('click', handleShowResults)
   }
 }
+
+// MORE LOCAL STORAGE CODE
+// STEP 3: PULL DATA OUT OF LOCAL STORAGE
+let retreivedDucks = localStorage.getItem('myDucks');
+
+//  STEP 4: PARSE MY DATA INTO CODE MY APP CAN USE
+
+let parsedDucks = JSON.parse(retreivedDucks);
+
+
 //  EXECUTABLE CODE
 
-//  OBJECT CREATION
+if(retreivedDucks){
+  duckArray = parsedDucks;
+} else{
+  new Duck('sweep', 'png');
+  new Duck('bag');
+  new Duck('banana');
+  new Duck('bathroom');
+  new Duck('boots');
+  new Duck('breakfast');
+  new Duck('bubblegum');
+  new Duck('chair');
+  new Duck('cthulhu');
+  new Duck('dog-duck');
+  new Duck('dragon');
+  new Duck('pen');
+  new Duck('pet-sweep');
+  new Duck('scissors');
+  new Duck('shark');
+  new Duck('tauntaun');
+  new Duck('unicorn');
+  new Duck('water-can');
+  new Duck('wine-glass');
+}
+  
+//  REBUILD DUCK INSTANCES USING CONTRUCTOR
 
-new Duck('sweep', 'png');
-new Duck('bag');
-new Duck('banana');
-new Duck('bathroom');
-new Duck('boots');
-new Duck('breakfast');
-new Duck('bubblegum');
-new Duck('chair');
-new Duck('cthulhu');
-new Duck('dog-duck');
-new Duck('dragon');
-new Duck('pen');
-new Duck('pet-sweep');
-new Duck('scissors');
-new Duck('shark');
-new Duck('tauntaun');
-new Duck('unicorn');
-new Duck('water-can');
-new Duck('wine-glass');
+// if(retreivedDucks){
+//   for(let i = 0; i < parsedDucks.length; i++){
+//     if(parsedGoats[i].name === 'sweep'){
+//     let reconstructedSweepD = new Duck(parsedDucks[i].name, 'png')
+//     reconstructedSweepD.clicks = parsedDucks[i].clicks;
+//     reconstructedSweepD.views = parsedDucks[i].views;
+//     } else {
+//   let reconstructedDuck = new Duck(parsedDucks[i].name);
+//   reconstructedDuck.clicks = parsedDucks[i].clicks;
+//   reconstructedDuck.views = parsedDucks[i].views;
+//    }
+//   }
+// }
 
 renderImgs();
 
