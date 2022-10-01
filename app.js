@@ -65,11 +65,6 @@ function renderImgs(){
   imgTwo.src = duckArray[imgTwoIndex].img;
   imgThree.src = duckArray[imgThreeIndex].img;
   
-  
-  // imgOne.src = duckArray[imgOneIndex].img;
-  // imgTwo.src = duckArray[imgTwoIndex].img;
-  // imgThree.src = duckArray[imgThreeIndex].img;
-  
   duckArray[imgOneIndex].views++;
   duckArray[imgTwoIndex].views++;
   duckArray[imgThreeIndex].views++;
